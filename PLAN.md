@@ -50,6 +50,25 @@ Universe v1: SPY, QQQ (liquid index ETFs; no survivorship bias, no stock-picking
 fantasy). Daily bars, end-of-day decisions — the only frequency where a small
 account's cost structure is not instantly fatal.
 
+## How the harness runs (executor + tokens)
+
+Faithful to the Harness² pattern (executor agent + persistent LEARNINGS
+harness), with a hard split between judgment and math:
+
+- **Deterministic core — zero LLM tokens.** Data, signals, backtests, risk
+  checks, paper fills and gate evaluation are pure Python (stdlib only).
+  Reproducible to the cent; the same inputs always give the same verdict.
+- **Agent layer — Muse Spark (the same model Den talks to), running as the
+  daily cron agent.** No external API key, no OpenRouter, no Codex/OpenCode
+  executor; the *protocol* is Harness², the code is ours. The agent does only
+  what judgment is good for: Edit B proposals with written rationales, the
+  Reflect step (graveyard, lessons), and the digest. It never computes a
+  signal, sizes a position, or places a fill — it runs the scripts that do.
+- **Propose channels (all judged by identical gates):** baseline grid;
+  Edit A near-miss mutations of the closest kills (deterministic, in
+  improve.py); Edit B agent proposals in state/proposals.json (rationale
+  mandatory, deduplicated against all history).
+
 ## Daily cycle (cron, weekdays after US market close)
 
 1. `run_paper.py` — fetch data, apply incumbent strategy, risk-check, simulate

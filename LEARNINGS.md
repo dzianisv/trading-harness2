@@ -27,6 +27,12 @@ from kills; never delete a rule, only refine it with the reason recorded.
    Den's explicit, separate decision.
 10. **Report kills proudly.** A cycle that kills 24/24 candidates and changes
     nothing is a successful cycle. Changing something is not the goal.
+11. **Every proposal carries its evidence.** Three channels feed a cycle: the
+    baseline grid, near-miss mutations of the closest kills (Edit A), and
+    agent proposals (Edit B) written to state/proposals.json. An agent
+    proposal without a written rationale citing specific graveyard evidence
+    is never evaluated. All channels face identical gates — a good story
+    earns a trial, never an adoption.
 
 ## Graveyard
 
