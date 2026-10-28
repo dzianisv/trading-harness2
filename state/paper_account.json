@@ -1,0 +1,19 @@
+{
+  "cash": -7.105427357601002e-15,
+  "equity_history": [
+    {
+      "date": "2026-10-28",
+      "equity": 99.95
+    }
+  ],
+  "halt_reason": "",
+  "halted": false,
+  "inception": "2026-10-29",
+  "last_bar_date": "2026-10-28",
+  "last_run": "2026-10-28T23:08:27.700889+00:00",
+  "peak_equity": 100.0,
+  "positions": {
+    "QQQ": 0.06887310470174957,
+    "SPY": 0.06470848836831432
+  }
+}
