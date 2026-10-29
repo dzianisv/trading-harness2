@@ -50,3 +50,17 @@ keeps the full numeric record in state/trials.json; this is the human digest.)
   credibility budget. Most other kills: failed to beat the benchmark in ≥3/4
   folds. Data note: Stooq bot-walls this VM — Yahoo chart API is the primary
   feed, Stooq only a fallback.
+- **Cycle 2 (2026-10-30; trials stamped 2026-10-29 UTC): 24 trials
+  (grid 16, mutation 4, agent 4), 40 total, 0 adopted.** Incumbent
+  sma_trend(50,200) re-evaluated: median fold Sharpe 1.76, full CAGR 13.2%
+  vs buy&hold 16.6%, deflated-Sharpe prob 0.22. Closest kill: mutation
+  rsi_meanrev(period=21, entry=30, exit=70) — median fold Sharpe 2.53,
+  beat the benchmark in 3/4 folds (passed those two gates), killed only
+  on 11 trades (<30) and deflated-Sharpe prob 0.18. Agent attempts to fix
+  the period=14/entry=30 trade shortage all failed informatively:
+  entry=35 raised trades 14→21 (median Sharpe 1.84), exit=60 barely moved
+  them (15, median 1.98), period=5 raised trades to 63 but median Sharpe
+  collapsed to 0.55. Lesson: in the RSI family the high fold Sharpe IS
+  the sparse trading — lengthening the period raises Sharpe and benchmark
+  wins while trades fall further; no rung on this ladder buys credibility
+  (≥30 trades) without destroying the Sharpe it was meant to certify.

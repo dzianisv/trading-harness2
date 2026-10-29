@@ -444,5 +444,723 @@
     "full_sharpe": 0.601,
     "full_cagr_pct": 8.76,
     "benchmark_cagr_pct": 16.73
+  },
+  {
+    "date": "2026-10-29",
+    "strategy": "rsi_meanrev",
+    "params": {
+      "entry": 30,
+      "exit": 70,
+      "period": 5
+    },
+    "channel": "agent",
+    "rationale": "Builds on the closest kill rsi_meanrev(period=14, entry=30, exit=70), which posted the only above-incumbent median fold Sharpe (2.26 vs incumbent 1.85) and beat the benchmark in 2/4 folds but was killed for only 14 trades in folds (<30) and deflated-Sharpe prob 0.13. Shortening the RSI period from 14 to 5 (adjacent ladder rung) makes RSI cross the same entry=30 threshold far more often while keeping the entry/exit logic that produced the high fold Sharpe, directly addressing the trade-count failure that killed the original.",
+    "verdict": "killed",
+    "kill_reasons": [
+      "beat benchmark in 1/4 folds (< 3)",
+      "median fold Sharpe 0.55 <= incumbent 1.76",
+      "deflated Sharpe prob 0.12 < 0.9"
+    ],
+    "median_fold_sharpe": 0.5495972532616049,
+    "fold_sharpes": [
+      0.55,
+      0.144,
+      2.676,
+      0.348
+    ],
+    "folds_beating_benchmark": 1,
+    "trades_in_folds": 63,
+    "deflated_sharpe_prob": 0.123,
+    "full_sharpe": 0.452,
+    "full_cagr_pct": 6.35,
+    "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-10-29",
+    "strategy": "rsi_meanrev",
+    "params": {
+      "entry": 35,
+      "exit": 70,
+      "period": 14
+    },
+    "channel": "agent",
+    "rationale": "Builds on the closest kill rsi_meanrev(period=14, entry=30, exit=70), killed for only 14 trades (<30) and deflated-Sharpe prob 0.13 despite a median fold Sharpe of 2.26 above the incumbent's 1.85. Raising the entry threshold one ladder rung from 30 to 35 widens the oversold trigger so the same period=14 signal fires more frequently, directly targeting the insufficient-trades kill reason without changing the exit rule that shaped its fold returns.",
+    "verdict": "killed",
+    "kill_reasons": [
+      "only 21 trades in folds (< 30)",
+      "beat benchmark in 2/4 folds (< 3)",
+      "deflated Sharpe prob 0.15 < 0.9"
+    ],
+    "median_fold_sharpe": 1.840443035345859,
+    "fold_sharpes": [
+      1.84,
+      -0.18,
+      2.575,
+      1.397
+    ],
+    "folds_beating_benchmark": 2,
+    "trades_in_folds": 21,
+    "deflated_sharpe_prob": 0.154,
+    "full_sharpe": 0.531,
+    "full_cagr_pct": 7.86,
+    "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-10-29",
+    "strategy": "rsi_meanrev",
+    "params": {
+      "entry": 30,
+      "exit": 60,
+      "period": 14
+    },
+    "channel": "agent",
+    "rationale": "Builds on the closest kill rsi_meanrev(period=14, entry=30, exit=70), killed for only 14 trades (<30) and deflated-Sharpe prob 0.13 despite a median fold Sharpe of 2.26. Lowering the exit from 70 to 60 (adjacent ladder rung) closes positions earlier on a weaker overbought signal, freeing capital to re-enter on the next oversold dip and so increasing trade count, which is the exact failure that killed the original rather than its Sharpe.",
+    "verdict": "killed",
+    "kill_reasons": [
+      "only 15 trades in folds (< 30)",
+      "beat benchmark in 2/4 folds (< 3)",
+      "deflated Sharpe prob 0.11 < 0.9"
+    ],
+    "median_fold_sharpe": 1.9797331381199166,
+    "fold_sharpes": [
+      1.98,
+      -0.376,
+      0.0,
+      2.408
+    ],
+    "folds_beating_benchmark": 2,
+    "trades_in_folds": 15,
+    "deflated_sharpe_prob": 0.112,
+    "full_sharpe": 0.525,
+    "full_cagr_pct": 7.06,
+    "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-10-29",
+    "strategy": "rsi_meanrev",
+    "params": {
+      "entry": 20,
+      "exit": 70,
+      "period": 3
+    },
+    "channel": "agent",
+    "rationale": "Builds on both rsi_meanrev(period=2) trials, which had ample trades (141 for entry=10 and 163 for entry=30) and positive Sharpe in all four folds for entry=10, but were killed for median fold Sharpe of only 1.00/0.98 (<= incumbent 1.85), beating the benchmark in just 1/4 folds, and deflated-Sharpe prob 0.26/0.08; it also builds on the period=14/entry=30 kill whose median Sharpe was 2.26 but which had only 14 trades. Period=3 with the intermediate entry=20 is the untested middle ground between the too-noisy period=2 and the too-sparse period=14, aiming to keep period=2-level trade count while lifting median fold Sharpe toward the period=14 result.",
+    "verdict": "killed",
+    "kill_reasons": [
+      "beat benchmark in 2/4 folds (< 3)",
+      "median fold Sharpe 0.82 <= incumbent 1.76",
+      "deflated Sharpe prob 0.17 < 0.9"
+    ],
+    "median_fold_sharpe": 0.8198702304357828,
+    "fold_sharpes": [
+      0.614,
+      0.577,
+      1.64,
+      0.82
+    ],
+    "folds_beating_benchmark": 2,
+    "trades_in_folds": 91,
+    "deflated_sharpe_prob": 0.17,
+    "full_sharpe": 0.786,
+    "full_cagr_pct": 11.19,
+    "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-10-29",
+    "strategy": "rsi_meanrev",
+    "params": {
+      "period": 21,
+      "entry": 30,
+      "exit": 70
+    },
+    "channel": "mutation",
+    "rationale": "Near-miss mutation of rsi_meanrev {'period': 14, 'entry': 30, 'exit': 70} (median fold Sharpe 2.256078155540716, died on: only 14 trades in folds (< 30)); step period 14->21.",
+    "verdict": "killed",
+    "kill_reasons": [
+      "only 11 trades in folds (< 30)",
+      "deflated Sharpe prob 0.18 < 0.9"
+    ],
+    "median_fold_sharpe": 2.5315816119644645,
+    "fold_sharpes": [
+      2.616,
+      0.086,
+      1.903,
+      2.532
+    ],
+    "folds_beating_benchmark": 3,
+    "trades_in_folds": 11,
+    "deflated_sharpe_prob": 0.177,
+    "full_sharpe": 0.52,
+    "full_cagr_pct": 6.75,
+    "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-10-29",
+    "strategy": "sma_trend",
+    "params": {
+      "fast": 5,
+      "slow": 150
+    },
+    "channel": "mutation",
+    "rationale": "Near-miss mutation of sma_trend {'fast': 10, 'slow': 150} (median fold Sharpe 1.8484633920758187, died on: only 10 trades in folds (< 30)); step fast 10->5.",
+    "verdict": "killed",
+    "kill_reasons": [
+      "only 13 trades in folds (< 30)",
+      "beat benchmark in 1/4 folds (< 3)",
+      "median fold Sharpe 1.41 <= incumbent 1.76",
+      "deflated Sharpe prob 0.30 < 0.9"
+    ],
+    "median_fold_sharpe": 1.4052927696570903,
+    "fold_sharpes": [
+      1.405,
+      -0.091,
+      3.193,
+      0.091
+    ],
+    "folds_beating_benchmark": 1,
+    "trades_in_folds": 13,
+    "deflated_sharpe_prob": 0.3,
+    "full_sharpe": 0.998,
+    "full_cagr_pct": 13.59,
+    "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-10-29",
+    "strategy": "sma_trend",
+    "params": {
+      "fast": 5,
+      "slow": 200
+    },
+    "channel": "mutation",
+    "rationale": "Near-miss mutation of sma_trend {'fast': 10, 'slow': 200} (median fold Sharpe 1.8484633920758187, died on: only 9 trades in folds (< 30)); step fast 10->5.",
+    "verdict": "killed",
+    "kill_reasons": [
+      "only 10 trades in folds (< 30)",
+      "beat benchmark in 0/4 folds (< 3)",
+      "median fold Sharpe 1.76 <= incumbent 1.76",
+      "deflated Sharpe prob 0.29 < 0.9"
+    ],
+    "median_fold_sharpe": 1.7624575900566364,
+    "fold_sharpes": [
+      1.762,
+      -0.542,
+      3.29,
+      0.176
+    ],
+    "folds_beating_benchmark": 0,
+    "trades_in_folds": 10,
+    "deflated_sharpe_prob": 0.287,
+    "full_sharpe": 1.004,
+    "full_cagr_pct": 13.82,
+    "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-10-29",
+    "strategy": "sma_trend",
+    "params": {
+      "fast": 35,
+      "slow": 100
+    },
+    "channel": "mutation",
+    "rationale": "Near-miss mutation of sma_trend {'fast': 20, 'slow': 100} (median fold Sharpe 1.8484633920758187, died on: only 10 trades in folds (< 30)); step fast 20->35.",
+    "verdict": "killed",
+    "kill_reasons": [
+      "only 10 trades in folds (< 30)",
+      "beat benchmark in 0/4 folds (< 3)",
+      "median fold Sharpe 1.61 <= incumbent 1.76",
+      "deflated Sharpe prob 0.16 < 0.9"
+    ],
+    "median_fold_sharpe": 1.6146065768548399,
+    "fold_sharpes": [
+      1.615,
+      -0.244,
+      3.078,
+      -0.935
+    ],
+    "folds_beating_benchmark": 0,
+    "trades_in_folds": 10,
+    "deflated_sharpe_prob": 0.162,
+    "full_sharpe": 0.633,
+    "full_cagr_pct": 9.22,
+    "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-10-29",
+    "strategy": "sma_trend",
+    "params": {
+      "fast": 10,
+      "slow": 100
+    },
+    "channel": "grid",
+    "rationale": "Bounded grid sweep (baseline channel).",
+    "verdict": "killed",
+    "kill_reasons": [
+      "only 16 trades in folds (< 30)",
+      "beat benchmark in 1/4 folds (< 3)",
+      "median fold Sharpe 0.98 <= incumbent 1.76",
+      "deflated Sharpe prob 0.24 < 0.9"
+    ],
+    "median_fold_sharpe": 0.9813981666410784,
+    "fold_sharpes": [
+      0.981,
+      0.202,
+      3.129,
+      -0.141
+    ],
+    "folds_beating_benchmark": 1,
+    "trades_in_folds": 16,
+    "deflated_sharpe_prob": 0.235,
+    "full_sharpe": 0.844,
+    "full_cagr_pct": 11.18,
+    "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-10-29",
+    "strategy": "sma_trend",
+    "params": {
+      "fast": 10,
+      "slow": 150
+    },
+    "channel": "grid",
+    "rationale": "Bounded grid sweep (baseline channel).",
+    "verdict": "killed",
+    "kill_reasons": [
+      "only 10 trades in folds (< 30)",
+      "beat benchmark in 0/4 folds (< 3)",
+      "median fold Sharpe 1.76 <= incumbent 1.76",
+      "deflated Sharpe prob 0.20 < 0.9"
+    ],
+    "median_fold_sharpe": 1.7624575900566364,
+    "fold_sharpes": [
+      1.762,
+      -0.542,
+      3.111,
+      -0.291
+    ],
+    "folds_beating_benchmark": 0,
+    "trades_in_folds": 10,
+    "deflated_sharpe_prob": 0.204,
+    "full_sharpe": 0.889,
+    "full_cagr_pct": 12.38,
+    "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-10-29",
+    "strategy": "sma_trend",
+    "params": {
+      "fast": 10,
+      "slow": 200
+    },
+    "channel": "grid",
+    "rationale": "Bounded grid sweep (baseline channel).",
+    "verdict": "killed",
+    "kill_reasons": [
+      "only 9 trades in folds (< 30)",
+      "beat benchmark in 0/4 folds (< 3)",
+      "median fold Sharpe 1.76 <= incumbent 1.76",
+      "deflated Sharpe prob 0.21 < 0.9"
+    ],
+    "median_fold_sharpe": 1.7624575900566364,
+    "fold_sharpes": [
+      1.762,
+      -0.533,
+      3.139,
+      -0.18
+    ],
+    "folds_beating_benchmark": 0,
+    "trades_in_folds": 9,
+    "deflated_sharpe_prob": 0.205,
+    "full_sharpe": 0.847,
+    "full_cagr_pct": 11.79,
+    "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-10-29",
+    "strategy": "sma_trend",
+    "params": {
+      "fast": 20,
+      "slow": 100
+    },
+    "channel": "grid",
+    "rationale": "Bounded grid sweep (baseline channel).",
+    "verdict": "killed",
+    "kill_reasons": [
+      "only 10 trades in folds (< 30)",
+      "beat benchmark in 0/4 folds (< 3)",
+      "median fold Sharpe 1.76 <= incumbent 1.76",
+      "deflated Sharpe prob 0.19 < 0.9"
+    ],
+    "median_fold_sharpe": 1.7624575900566364,
+    "fold_sharpes": [
+      1.762,
+      -0.558,
+      3.452,
+      -0.595
+    ],
+    "folds_beating_benchmark": 0,
+    "trades_in_folds": 10,
+    "deflated_sharpe_prob": 0.192,
+    "full_sharpe": 0.704,
+    "full_cagr_pct": 9.76,
+    "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-10-29",
+    "strategy": "sma_trend",
+    "params": {
+      "fast": 20,
+      "slow": 150
+    },
+    "channel": "grid",
+    "rationale": "Bounded grid sweep (baseline channel).",
+    "verdict": "killed",
+    "kill_reasons": [
+      "only 10 trades in folds (< 30)",
+      "beat benchmark in 0/4 folds (< 3)",
+      "median fold Sharpe 1.76 <= incumbent 1.76",
+      "deflated Sharpe prob 0.16 < 0.9"
+    ],
+    "median_fold_sharpe": 1.7624575900566364,
+    "fold_sharpes": [
+      1.762,
+      -0.355,
+      3.354,
+      -0.838
+    ],
+    "folds_beating_benchmark": 0,
+    "trades_in_folds": 10,
+    "deflated_sharpe_prob": 0.161,
+    "full_sharpe": 0.777,
+    "full_cagr_pct": 11.03,
+    "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-10-29",
+    "strategy": "sma_trend",
+    "params": {
+      "fast": 20,
+      "slow": 200
+    },
+    "channel": "grid",
+    "rationale": "Bounded grid sweep (baseline channel).",
+    "verdict": "killed",
+    "kill_reasons": [
+      "only 11 trades in folds (< 30)",
+      "beat benchmark in 0/4 folds (< 3)",
+      "median fold Sharpe 1.76 <= incumbent 1.76",
+      "deflated Sharpe prob 0.16 < 0.9"
+    ],
+    "median_fold_sharpe": 1.7624575900566364,
+    "fold_sharpes": [
+      1.762,
+      -0.205,
+      3.538,
+      -0.977
+    ],
+    "folds_beating_benchmark": 0,
+    "trades_in_folds": 11,
+    "deflated_sharpe_prob": 0.156,
+    "full_sharpe": 0.773,
+    "full_cagr_pct": 11.45,
+    "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-10-29",
+    "strategy": "sma_trend",
+    "params": {
+      "fast": 50,
+      "slow": 100
+    },
+    "channel": "grid",
+    "rationale": "Bounded grid sweep (baseline channel).",
+    "verdict": "killed",
+    "kill_reasons": [
+      "only 11 trades in folds (< 30)",
+      "beat benchmark in 0/4 folds (< 3)",
+      "median fold Sharpe 1.73 <= incumbent 1.76",
+      "deflated Sharpe prob 0.12 < 0.9"
+    ],
+    "median_fold_sharpe": 1.7301089364234248,
+    "fold_sharpes": [
+      1.73,
+      -0.341,
+      3.263,
+      -0.994
+    ],
+    "folds_beating_benchmark": 0,
+    "trades_in_folds": 11,
+    "deflated_sharpe_prob": 0.122,
+    "full_sharpe": 0.586,
+    "full_cagr_pct": 8.53,
+    "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-10-29",
+    "strategy": "sma_trend",
+    "params": {
+      "fast": 50,
+      "slow": 150
+    },
+    "channel": "grid",
+    "rationale": "Bounded grid sweep (baseline channel).",
+    "verdict": "killed",
+    "kill_reasons": [
+      "only 9 trades in folds (< 30)",
+      "beat benchmark in 0/4 folds (< 3)",
+      "median fold Sharpe 1.76 <= incumbent 1.76",
+      "deflated Sharpe prob 0.02 < 0.9"
+    ],
+    "median_fold_sharpe": 1.7624575900566364,
+    "fold_sharpes": [
+      1.762,
+      -1.401,
+      2.66,
+      -0.928
+    ],
+    "folds_beating_benchmark": 0,
+    "trades_in_folds": 9,
+    "deflated_sharpe_prob": 0.025,
+    "full_sharpe": 0.674,
+    "full_cagr_pct": 10.23,
+    "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-10-29",
+    "strategy": "donchian_breakout",
+    "params": {
+      "entry": 20,
+      "exit": 10
+    },
+    "channel": "grid",
+    "rationale": "Bounded grid sweep (baseline channel).",
+    "verdict": "killed",
+    "kill_reasons": [
+      "beat benchmark in 0/4 folds (< 3)",
+      "median fold Sharpe 0.65 <= incumbent 1.76",
+      "deflated Sharpe prob 0.08 < 0.9"
+    ],
+    "median_fold_sharpe": 0.6532366698253893,
+    "fold_sharpes": [
+      0.653,
+      -0.723,
+      2.777,
+      -0.877
+    ],
+    "folds_beating_benchmark": 0,
+    "trades_in_folds": 47,
+    "deflated_sharpe_prob": 0.08,
+    "full_sharpe": 0.873,
+    "full_cagr_pct": 9.01,
+    "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-10-29",
+    "strategy": "donchian_breakout",
+    "params": {
+      "entry": 20,
+      "exit": 20
+    },
+    "channel": "grid",
+    "rationale": "Bounded grid sweep (baseline channel).",
+    "verdict": "killed",
+    "kill_reasons": [
+      "only 25 trades in folds (< 30)",
+      "beat benchmark in 1/4 folds (< 3)",
+      "median fold Sharpe 1.22 <= incumbent 1.76",
+      "deflated Sharpe prob 0.29 < 0.9"
+    ],
+    "median_fold_sharpe": 1.219645047371194,
+    "fold_sharpes": [
+      1.22,
+      0.002,
+      3.592,
+      -0.232
+    ],
+    "folds_beating_benchmark": 1,
+    "trades_in_folds": 25,
+    "deflated_sharpe_prob": 0.295,
+    "full_sharpe": 0.905,
+    "full_cagr_pct": 10.89,
+    "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-10-29",
+    "strategy": "donchian_breakout",
+    "params": {
+      "entry": 55,
+      "exit": 10
+    },
+    "channel": "grid",
+    "rationale": "Bounded grid sweep (baseline channel).",
+    "verdict": "killed",
+    "kill_reasons": [
+      "beat benchmark in 0/4 folds (< 3)",
+      "median fold Sharpe 0.63 <= incumbent 1.76",
+      "deflated Sharpe prob 0.02 < 0.9"
+    ],
+    "median_fold_sharpe": 0.6317730473172818,
+    "fold_sharpes": [
+      0.632,
+      -1.149,
+      1.962,
+      -1.556
+    ],
+    "folds_beating_benchmark": 0,
+    "trades_in_folds": 40,
+    "deflated_sharpe_prob": 0.017,
+    "full_sharpe": 0.528,
+    "full_cagr_pct": 4.12,
+    "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-10-29",
+    "strategy": "donchian_breakout",
+    "params": {
+      "entry": 55,
+      "exit": 20
+    },
+    "channel": "grid",
+    "rationale": "Bounded grid sweep (baseline channel).",
+    "verdict": "killed",
+    "kill_reasons": [
+      "only 23 trades in folds (< 30)",
+      "beat benchmark in 0/4 folds (< 3)",
+      "median fold Sharpe 0.80 <= incumbent 1.76",
+      "deflated Sharpe prob 0.10 < 0.9"
+    ],
+    "median_fold_sharpe": 0.8017463855869863,
+    "fold_sharpes": [
+      0.802,
+      -0.275,
+      2.913,
+      -0.95
+    ],
+    "folds_beating_benchmark": 0,
+    "trades_in_folds": 23,
+    "deflated_sharpe_prob": 0.103,
+    "full_sharpe": 0.701,
+    "full_cagr_pct": 6.57,
+    "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-10-29",
+    "strategy": "rsi_meanrev",
+    "params": {
+      "period": 2,
+      "entry": 10,
+      "exit": 70
+    },
+    "channel": "grid",
+    "rationale": "Bounded grid sweep (baseline channel).",
+    "verdict": "killed",
+    "kill_reasons": [
+      "beat benchmark in 1/4 folds (< 3)",
+      "median fold Sharpe 1.02 <= incumbent 1.76",
+      "deflated Sharpe prob 0.18 < 0.9"
+    ],
+    "median_fold_sharpe": 1.0183288726198358,
+    "fold_sharpes": [
+      1.018,
+      0.798,
+      2.868,
+      0.496
+    ],
+    "folds_beating_benchmark": 1,
+    "trades_in_folds": 139,
+    "deflated_sharpe_prob": 0.177,
+    "full_sharpe": 0.534,
+    "full_cagr_pct": 7.25,
+    "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-10-29",
+    "strategy": "rsi_meanrev",
+    "params": {
+      "period": 2,
+      "entry": 30,
+      "exit": 70
+    },
+    "channel": "grid",
+    "rationale": "Bounded grid sweep (baseline channel).",
+    "verdict": "killed",
+    "kill_reasons": [
+      "beat benchmark in 1/4 folds (< 3)",
+      "median fold Sharpe 1.00 <= incumbent 1.76",
+      "deflated Sharpe prob 0.05 < 0.9"
+    ],
+    "median_fold_sharpe": 0.9956524401075402,
+    "fold_sharpes": [
+      0.996,
+      -0.042,
+      2.013,
+      0.109
+    ],
+    "folds_beating_benchmark": 1,
+    "trades_in_folds": 160,
+    "deflated_sharpe_prob": 0.047,
+    "full_sharpe": 0.511,
+    "full_cagr_pct": 7.32,
+    "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-10-29",
+    "strategy": "rsi_meanrev",
+    "params": {
+      "period": 14,
+      "entry": 10,
+      "exit": 70
+    },
+    "channel": "grid",
+    "rationale": "Bounded grid sweep (baseline channel).",
+    "verdict": "killed",
+    "kill_reasons": [
+      "only 0 trades in folds (< 30)",
+      "beat benchmark in 1/4 folds (< 3)",
+      "median fold Sharpe 0.00 <= incumbent 1.76",
+      "deflated Sharpe prob 0.00 < 0.9"
+    ],
+    "median_fold_sharpe": 0.0,
+    "fold_sharpes": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "folds_beating_benchmark": 1,
+    "trades_in_folds": 0,
+    "deflated_sharpe_prob": 0.0,
+    "full_sharpe": 0.55,
+    "full_cagr_pct": 0.66,
+    "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-10-29",
+    "strategy": "rsi_meanrev",
+    "params": {
+      "period": 14,
+      "entry": 30,
+      "exit": 70
+    },
+    "channel": "grid",
+    "rationale": "Bounded grid sweep (baseline channel).",
+    "verdict": "killed",
+    "kill_reasons": [
+      "only 14 trades in folds (< 30)",
+      "beat benchmark in 2/4 folds (< 3)",
+      "deflated Sharpe prob 0.08 < 0.9"
+    ],
+    "median_fold_sharpe": 2.0066319362560083,
+    "fold_sharpes": [
+      2.007,
+      -0.317,
+      1.22,
+      2.842
+    ],
+    "folds_beating_benchmark": 2,
+    "trades_in_folds": 14,
+    "deflated_sharpe_prob": 0.076,
+    "full_sharpe": 0.596,
+    "full_cagr_pct": 8.67,
+    "benchmark_cagr_pct": 16.61
   }
 ]
