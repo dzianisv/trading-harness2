@@ -1,0 +1,5 @@
+ok - no lookahead in any strategy
+ok - costs reduce returns
+ok - guardrails clip per-symbol weight and gross
+ok - paper fill math (fractional, slippage applied)
+ALL TESTS PASSED

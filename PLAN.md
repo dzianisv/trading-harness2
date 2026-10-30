@@ -69,17 +69,18 @@ powered by the OpenRouter API**, the same pattern as his RFS loop. v2:
   after every cycle, backs off 30 min on OpenRouter 429s, switches model
   after 2 primary failures, and parks after 3 consecutive failed cycles
   (3-strike rule). Key: `~/.config/rfs/openrouter.key` (shared with the RFS
-  loop). Primary model: `deepseek/deepseek-v4.1-flash` (Den's choice;
-  $0.045/M input, $0.50/M output — a heavy cycle costs roughly $0.15–0.40).
-  It is NOT free on OpenRouter (the free variant Den knows is OpenCode Zen's,
-  a different provider), and the shared key's usage limit is $0, so the model
-  returns 403 until Den raises the key limit (his account action; the runner
-  detects the 403 and parks immediately with the remedy written to
-  harness/state/PARKED.md). Fallback: `google/gemma-4-31b-it:free`.
-  Per-attempt timeout defaults to 1800s (HARNESS_ATTEMPT_TIMEOUT) — bounded
-  on purpose, see the 2026-10-30 smoke test note in LEARNINGS: pi agent
-  turns on free models currently stall, while the raw OpenRouter API
-  answers in ~1s on the same key.
+  loop, free models only — Den's standing instruction). Primary model:
+  `nvidia/nemotron-3.5-lightning:free`; fallback:
+  `poolside/laguna-s-2.1:free`. The runner invokes pi with stdin from
+  /dev/null — pi -p reads piped stdin as prompt input and blocks if the
+  launching shell holds the pipe open (LEARNINGS rule 12; this artifact,
+  not the models, caused the 2026-10-30 "free models hang" false alarm).
+  DeepSeek V4.1 Flash is paid on OpenRouter and the shared key's limit is
+  $0; Den declined to raise it, so the harness stays on free models (the
+  runner still parks immediately if a key-limit 403 ever appears).
+  Per-attempt timeout defaults to 1800s (HARNESS_ATTEMPT_TIMEOUT).
+  First full free-model cycle: cycle 3, 2026-10-30 — completed in ~6 min,
+  1 proposed (momentum_close), 3 probed, 0 adopted.
 - **Muse's role is now supervisor only**: a weekday cron runs the tests and
   the paper cycle, launches the harness if it is not running, pushes the
   repo to GitHub, and sends Den the digest. Muse no longer proposes or

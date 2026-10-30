@@ -11,8 +11,8 @@ if [ -z "${OPENROUTER_API_KEY:-}" ] && [ -f "$HOME/.config/rfs/openrouter.key" ]
   export OPENROUTER_API_KEY="$(cat "$HOME/.config/rfs/openrouter.key")"
 fi
 PI="$HOME/workspace/tools/bin/pi"
-MODEL="${HARNESS_MODEL:-deepseek/deepseek-v4.1-flash}"
-FALLBACK_MODEL="google/gemma-4-31b-it:free"
+MODEL="${HARNESS_MODEL:-nvidia/nemotron-3.5-lightning:free}"
+FALLBACK_MODEL="poolside/laguna-s-2.1:free"
 ATTEMPT_TIMEOUT="${HARNESS_ATTEMPT_TIMEOUT:-1800}"
 STATE="harness/state"; mkdir -p "$STATE" harness/runs "$STATE/backup"
 [ -f "$STATE/next_cycle.txt" ] || echo 3 > "$STATE/next_cycle.txt"
@@ -51,7 +51,10 @@ for i in $(seq 1 "$MAX"); do
   N=$(cat "$STATE/next_cycle.txt")
   OUT="harness/runs/cycle$N-pi-output.log"
   echo "--- cycle $N attempt $(date) model=$MODEL ---"
-  timeout "$ATTEMPT_TIMEOUT" "$PI" -p --provider openrouter --model "$MODEL" "$(cycle_prompt "$N")" > "$OUT" 2>&1
+  # stdin MUST be /dev/null: pi -p reads piped stdin as prompt input and
+  # blocks forever if the launching shell holds the pipe open (root cause of
+  # the 2026-10-30 "free models hang" false alarm - see LEARNINGS).
+  timeout "$ATTEMPT_TIMEOUT" "$PI" -p --provider openrouter --model "$MODEL" "$(cycle_prompt "$N")" < /dev/null > "$OUT" 2>&1
   RC=$?
   if grep -q "429" "$OUT" || grep -qi "rate limit" "$OUT"; then
     echo "cycle $N: quota/rate-limit hit (rc=$RC) - backing off 30 min, same cycle retries"

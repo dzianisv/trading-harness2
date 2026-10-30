@@ -33,6 +33,13 @@ from kills; never delete a rule, only refine it with the reason recorded.
     proposal without a written rationale citing specific graveyard evidence
     is never evaluated. All channels face identical gates — a good story
     earns a trial, never an adoption.
+12. **Tooling artifacts are not model failures.** `pi -p` reads piped stdin
+    as prompt input: launched from a shell that holds stdin open, it blocks
+    forever with zero output — indistinguishable from a hung model. The
+    runner therefore always invokes pi with `< /dev/null`. (2026-10-30:
+    hours were spent blaming free OpenRouter models for this; with stdin
+    closed, nemotron lightning answered in 4s and completed a full cycle
+    in ~6 min.)
 
 ## Graveyard
 
@@ -75,3 +82,5 @@ keeps the full numeric record in state/trials.json; this is the human digest.)
   the sparse trading — lengthening the period raises Sharpe and benchmark
   wins while trades fall further; no rung on this ladder buys credibility
   (≥30 trades) without destroying the Sharpe it was meant to certify.
+
+- **Cycle 3 (2026-10-30): 1 proposed, 1 killed, 0 adopted.** momentum_close strategy family — pure momentum via close-above-N-day-lookback. Three lookbacks tested (50, 100, 150): all killed for gate failures. lookback=50: 45 trades, 1/4 folds beating benchmark, median fold Sharpe 1.25, deflated-Sharpe prob 0.28. lookback=100: 23 trades, 1/4 folds, median Sharpe 1.61, deflated prob 0.27. lookback=150: 26 trades, 0/4 folds, median Sharpe 1.76 (tie), deflated prob 0.12. Lesson: pure momentum suffers the same RSI-family trade-off: shorter lookbacks increase trade count but collapse Sharpe/benchmark consistency; longer lookbacks raise Sharpe but trades fall below 30 and benchmark folds vanish. No single momentum lookback satisfies all four gates (≥30 trades, ≥3/4 folds, median Sharpe > incumbent, deflated Sharpe prob > 0.9) simultaneously. The SPY/QQQ daily momentum curve cannot certify belief on its own evidence.

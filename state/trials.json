@@ -1162,5 +1162,91 @@
     "full_sharpe": 0.596,
     "full_cagr_pct": 8.67,
     "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-10-30",
+    "strategy": "momentum_close",
+    "params": {
+      "lookback": 100
+    },
+    "channel": "harness",
+    "rationale": "Pure momentum: close above level 100 days ago; sits between RSI high-Share/low-trades and SMA low-Share/high-trades; addresses cycle 2 kill rsi_meanrev(period=21) that had 11 trades and deflated prob 0.18",
+    "verdict": "killed",
+    "kill_reasons": [
+      "only 23 trades in folds (< 30)",
+      "beat benchmark in 1/4 folds (< 3)",
+      "median fold Sharpe 1.61 <= incumbent 1.76",
+      "deflated Sharpe prob 0.27 < 0.9"
+    ],
+    "median_fold_sharpe": 1.6124014551607966,
+    "fold_sharpes": [
+      1.612,
+      -0.132,
+      3.142,
+      0.399
+    ],
+    "folds_beating_benchmark": 1,
+    "trades_in_folds": 23,
+    "deflated_sharpe_prob": 0.274,
+    "full_sharpe": 0.87,
+    "full_cagr_pct": 12.08,
+    "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-10-30",
+    "strategy": "momentum_close",
+    "params": {
+      "lookback": 50
+    },
+    "channel": "harness",
+    "rationale": "Pure momentum with shorter 50-day lookback; tests if more trades can be generated while maintaining benchmark-beating ability; addresses cycle 2 kill where rsi_meanrev(period=21) had only 11 trades",
+    "verdict": "killed",
+    "kill_reasons": [
+      "beat benchmark in 1/4 folds (< 3)",
+      "median fold Sharpe 1.25 <= incumbent 1.76",
+      "deflated Sharpe prob 0.28 < 0.9"
+    ],
+    "median_fold_sharpe": 1.2492699202359718,
+    "fold_sharpes": [
+      1.249,
+      0.788,
+      3.301,
+      -0.662
+    ],
+    "folds_beating_benchmark": 1,
+    "trades_in_folds": 45,
+    "deflated_sharpe_prob": 0.284,
+    "full_sharpe": 0.782,
+    "full_cagr_pct": 9.83,
+    "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-10-30",
+    "strategy": "momentum_close",
+    "params": {
+      "lookback": 150
+    },
+    "channel": "harness",
+    "rationale": "Pure momentum with longer 150-day lookback; tests if longer momentum horizon produces higher Sharpe and more benchmark folds; addresses cycle 2 kill pattern where RSI period=21 had high Sharpe but too few trades",
+    "verdict": "killed",
+    "kill_reasons": [
+      "only 26 trades in folds (< 30)",
+      "beat benchmark in 0/4 folds (< 3)",
+      "median fold Sharpe 1.76 <= incumbent 1.76",
+      "deflated Sharpe prob 0.12 < 0.9"
+    ],
+    "median_fold_sharpe": 1.7624575900566364,
+    "fold_sharpes": [
+      1.762,
+      -1.469,
+      3.506,
+      0.337
+    ],
+    "folds_beating_benchmark": 0,
+    "trades_in_folds": 26,
+    "deflated_sharpe_prob": 0.122,
+    "full_sharpe": 0.708,
+    "full_cagr_pct": 9.83,
+    "benchmark_cagr_pct": 16.61
   }
 ]
