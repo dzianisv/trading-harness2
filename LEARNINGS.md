@@ -50,6 +50,17 @@ keeps the full numeric record in state/trials.json; this is the human digest.)
   credibility budget. Most other kills: failed to beat the benchmark in ≥3/4
   folds. Data note: Stooq bot-walls this VM — Yahoo chart API is the primary
   feed, Stooq only a fallback.
+- **Executor smoke test (2026-10-30, v2 standalone harness):** cycle 3's first
+  attempt failed cleanly — runner logged it, reverted, no state damage. Root
+  cause is the executor layer, not the gates: cohere/north-mini-code:free is
+  not servable via pi despite appearing in the OpenRouter catalog, and pi
+  agent turns on working free models (nemotron lightning, poolside laguna,
+  gemma-4) produced zero output within 420–600s while the raw OpenRouter API
+  answers in ~1s on the same key (588/1000 free requests remaining that day).
+  Per-attempt timeout cut to 1800s to bound quota burn. Unblock paths: the
+  free tier recovers (supervisor keeps launching; the 3-strike park protects
+  the quota), or the key gets funded for a paid route (deepseek-v4.1-flash,
+  $0.07/M input) — Den's call, it's money.
 - **Cycle 2 (2026-10-30; trials stamped 2026-10-29 UTC): 24 trials
   (grid 16, mutation 4, agent 4), 40 total, 0 adopted.** Incumbent
   sma_trend(50,200) re-evaluated: median fold Sharpe 1.76, full CAGR 13.2%

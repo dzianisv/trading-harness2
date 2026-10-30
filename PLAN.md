@@ -50,24 +50,36 @@ Universe v1: SPY, QQQ (liquid index ETFs; no survivorship bias, no stock-picking
 fantasy). Daily bars, end-of-day decisions — the only frequency where a small
 account's cost structure is not instantly fatal.
 
-## How the harness runs (executor + tokens)
+## How the harness runs (executor + tokens) — v2, Den's design
 
-Faithful to the Harness² pattern (executor agent + persistent LEARNINGS
-harness), with a hard split between judgment and math:
+v1 ran the agent layer as a Muse cron (Muse Spark). Den corrected that
+(2026-10-30): the harness must be a **standalone self-improving system
+powered by the OpenRouter API**, the same pattern as his RFS loop. v2:
 
 - **Deterministic core — zero LLM tokens.** Data, signals, backtests, risk
   checks, paper fills and gate evaluation are pure Python (stdlib only).
-  Reproducible to the cent; the same inputs always give the same verdict.
-- **Agent layer — Muse Spark (the same model Den talks to), running as the
-  daily cron agent.** No external API key, no OpenRouter, no Codex/OpenCode
-  executor; the *protocol* is Harness², the code is ours. The agent does only
-  what judgment is good for: Edit B proposals with written rationales, the
-  Reflect step (graveyard, lessons), and the digest. It never computes a
-  signal, sizes a position, or places a fill — it runs the scripts that do.
-- **Propose channels (all judged by identical gates):** baseline grid;
-  Edit A near-miss mutations of the closest kills (deterministic, in
-  improve.py); Edit B agent proposals in state/proposals.json (rationale
-  mandatory, deduplicated against all history).
+  This is the Probe layer: it judges, it cannot be argued with.
+- **Standalone harness — pi CLI + OpenRouter.** `harness/run_continuous.sh`
+  runs back-to-back cycles (Propose → Probe → Compose → Reflect): the agent
+  reads LEARNINGS + the graveyard, makes ONE code edit per cycle (a new
+  strategy family or a graveyard-motivated variant), probes it via
+  `scripts/probe.py` (same gates; adoption happens in code or not at all),
+  restores backups for killed edits, and reflects into LEARNINGS. The runner
+  commits locally, reverts protected-file violations, re-runs the test suite
+  after every cycle, backs off 30 min on OpenRouter 429s, switches model
+  after 2 primary failures, and parks after 3 consecutive failed cycles
+  (3-strike rule). Key: `~/.config/rfs/openrouter.key` (shared with the RFS
+  loop, free-tier models). Primary model: `nvidia/nemotron-3.5-lightning:free`
+  (the RFS-proven ID; `cohere/north-mini-code:free` turned out not to be
+  servable via pi despite appearing in the API catalog); fallback:
+  `google/gemma-4-31b-it:free`. Per-attempt timeout defaults to 1800s
+  (HARNESS_ATTEMPT_TIMEOUT) — bounded on purpose, see the 2026-10-30 smoke
+  test note in LEARNINGS: pi agent turns on free models currently stall,
+  while the raw OpenRouter API answers in ~1s on the same key.
+- **Muse's role is now supervisor only**: a weekday cron runs the tests and
+  the paper cycle, launches the harness if it is not running, pushes the
+  repo to GitHub, and sends Den the digest. Muse no longer proposes or
+  judges strategies.
 
 ## Daily cycle (cron, weekdays after US market close)
 

@@ -22,7 +22,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "src"))
 
 from harness import data  # noqa: E402
-from harness.backtest import evaluate  # noqa: E402
+from harness.backtest import evaluate, gate_failures  # noqa: E402
 from harness.strategies import PARAM_GRIDS, STRATEGIES  # noqa: E402
 
 TRIALS_PATH = os.path.join(ROOT, "state", "trials.json")
@@ -112,23 +112,6 @@ def generate_mutations(trials, seen, cap=4):
     return out
 
 
-def kill_reasons(cand, incumbent_eval, cfg):
-    ev = cfg["evaluation"]
-    reasons = []
-    if cand["trades_in_folds"] < int(ev["min_trades"]):
-        reasons.append(f"only {cand['trades_in_folds']} trades in folds (< {ev['min_trades']})")
-    if cand["folds_beating_benchmark"] < int(ev["min_positive_folds"]):
-        reasons.append(f"beat benchmark in {cand['folds_beating_benchmark']}/{cand['n_folds']} folds "
-                       f"(< {ev['min_positive_folds']})")
-    if cand["median_fold_sharpe"] <= incumbent_eval["median_fold_sharpe"]:
-        reasons.append(f"median fold Sharpe {cand['median_fold_sharpe']:.2f} <= incumbent "
-                       f"{incumbent_eval['median_fold_sharpe']:.2f}")
-    if cand["deflated_sharpe_prob"] < float(ev["min_deflated_sharpe_prob"]):
-        reasons.append(f"deflated Sharpe prob {cand['deflated_sharpe_prob']:.2f} "
-                       f"< {ev['min_deflated_sharpe_prob']}")
-    return reasons
-
-
 def main():
     with open(os.path.join(ROOT, "config.json")) as f:
         cfg = json.load(f)
@@ -166,7 +149,7 @@ def main():
         name, params = cand["strategy"], cand["params"]
         n_trials = len(trials) + len(results) + 1
         ev_result = evaluate(name, params, dates, closes, cfg, n_trials)
-        reasons = kill_reasons(ev_result, inc_eval, cfg)
+        reasons = gate_failures(ev_result, inc_eval, cfg)
         verdict = "killed" if reasons else "gate_passed"
         record = {"date": date.today().isoformat(), "strategy": name, "params": params,
                   "channel": cand["channel"], "rationale": cand["rationale"],

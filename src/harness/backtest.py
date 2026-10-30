@@ -52,6 +52,27 @@ def metrics(curve):
             "max_drawdown": max_dd, "final": curve[-1]}
 
 
+def gate_failures(cand, incumbent_eval, cfg):
+    """The adoption gates (LEARNINGS rules 3-5). Returns a list of kill
+    reasons; an empty list means the candidate passed every gate. Shared by
+    scripts/improve.py and scripts/probe.py so every channel faces exactly
+    the same bar."""
+    ev = cfg["evaluation"]
+    reasons = []
+    if cand["trades_in_folds"] < int(ev["min_trades"]):
+        reasons.append(f"only {cand['trades_in_folds']} trades in folds (< {ev['min_trades']})")
+    if cand["folds_beating_benchmark"] < int(ev["min_positive_folds"]):
+        reasons.append(f"beat benchmark in {cand['folds_beating_benchmark']}/{cand['n_folds']} folds "
+                       f"(< {ev['min_positive_folds']})")
+    if cand["median_fold_sharpe"] <= incumbent_eval["median_fold_sharpe"]:
+        reasons.append(f"median fold Sharpe {cand['median_fold_sharpe']:.2f} <= incumbent "
+                       f"{incumbent_eval['median_fold_sharpe']:.2f}")
+    if cand["deflated_sharpe_prob"] < float(ev["min_deflated_sharpe_prob"]):
+        reasons.append(f"deflated Sharpe prob {cand['deflated_sharpe_prob']:.2f} "
+                       f"< {ev['min_deflated_sharpe_prob']}")
+    return reasons
+
+
 def deflated_sharpe_prob(daily_returns, n_trials):
     """Probability the true Sharpe > 0 given the number of trials ever run
     (Bailey & Lopez de Prado, simplified to skew=0 / kurtosis=3)."""

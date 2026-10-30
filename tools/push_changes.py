@@ -48,6 +48,9 @@ def collect_files():
         for fn in filenames:
             if fn.endswith(".pyc"):
                 continue
+            rel_peek = os.path.relpath(os.path.join(dirpath, fn), ROOT)
+            if rel_peek.startswith("harness/runs/") and fn.endswith(".log"):
+                continue  # run logs stay local; cycle docs (.md) still publish
             full = os.path.join(dirpath, fn)
             files.append(os.path.relpath(full, ROOT))
     return sorted(files)
