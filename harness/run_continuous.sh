@@ -11,7 +11,7 @@ if [ -z "${OPENROUTER_API_KEY:-}" ] && [ -f "$HOME/.config/rfs/openrouter.key" ]
   export OPENROUTER_API_KEY="$(cat "$HOME/.config/rfs/openrouter.key")"
 fi
 PI="$HOME/workspace/tools/bin/pi"
-MODEL="${HARNESS_MODEL:-nvidia/nemotron-3.5-lightning:free}"
+MODEL="${HARNESS_MODEL:-deepseek/deepseek-v4.1-flash}"
 FALLBACK_MODEL="google/gemma-4-31b-it:free"
 ATTEMPT_TIMEOUT="${HARNESS_ATTEMPT_TIMEOUT:-1800}"
 STATE="harness/state"; mkdir -p "$STATE" harness/runs "$STATE/backup"
@@ -56,6 +56,12 @@ for i in $(seq 1 "$MAX"); do
   if grep -q "429" "$OUT" || grep -qi "rate limit" "$OUT"; then
     echo "cycle $N: quota/rate-limit hit (rc=$RC) - backing off 30 min, same cycle retries"
     sleep 1800; continue
+  fi
+  if grep -q "Key limit exceeded" "$OUT"; then
+    echo "cycle $N: OpenRouter key limit is \$0 - deterministic block, parking immediately $(date)"
+    touch "$STATE/STOP"
+    printf "Parked %s: the OpenRouter key in ~/.config/rfs/openrouter.key has a $0 usage limit, so the paid primary model (deepseek/deepseek-v4.1-flash) returns 403 Key limit exceeded. Unblock: raise the key limit at https://openrouter.ai/settings/keys (e.g. to $10), remove harness/state/STOP, relaunch.\n" "$(date)" > "$STATE/PARKED.md"
+    break
   fi
   if [ $RC -ne 0 ] || ! grep -q "CYCLE $N COMPLETE" "$OUT"; then
     FAILS=$((FAILS+1)); PRIMARY_FAILS=$((PRIMARY_FAILS+1))

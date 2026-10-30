@@ -69,13 +69,17 @@ powered by the OpenRouter API**, the same pattern as his RFS loop. v2:
   after every cycle, backs off 30 min on OpenRouter 429s, switches model
   after 2 primary failures, and parks after 3 consecutive failed cycles
   (3-strike rule). Key: `~/.config/rfs/openrouter.key` (shared with the RFS
-  loop, free-tier models). Primary model: `nvidia/nemotron-3.5-lightning:free`
-  (the RFS-proven ID; `cohere/north-mini-code:free` turned out not to be
-  servable via pi despite appearing in the API catalog); fallback:
-  `google/gemma-4-31b-it:free`. Per-attempt timeout defaults to 1800s
-  (HARNESS_ATTEMPT_TIMEOUT) — bounded on purpose, see the 2026-10-30 smoke
-  test note in LEARNINGS: pi agent turns on free models currently stall,
-  while the raw OpenRouter API answers in ~1s on the same key.
+  loop). Primary model: `deepseek/deepseek-v4.1-flash` (Den's choice;
+  $0.045/M input, $0.50/M output — a heavy cycle costs roughly $0.15–0.40).
+  It is NOT free on OpenRouter (the free variant Den knows is OpenCode Zen's,
+  a different provider), and the shared key's usage limit is $0, so the model
+  returns 403 until Den raises the key limit (his account action; the runner
+  detects the 403 and parks immediately with the remedy written to
+  harness/state/PARKED.md). Fallback: `google/gemma-4-31b-it:free`.
+  Per-attempt timeout defaults to 1800s (HARNESS_ATTEMPT_TIMEOUT) — bounded
+  on purpose, see the 2026-10-30 smoke test note in LEARNINGS: pi agent
+  turns on free models currently stall, while the raw OpenRouter API
+  answers in ~1s on the same key.
 - **Muse's role is now supervisor only**: a weekday cron runs the tests and
   the paper cycle, launches the harness if it is not running, pushes the
   repo to GitHub, and sends Den the digest. Muse no longer proposes or
