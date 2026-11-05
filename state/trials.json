@@ -1248,5 +1248,35 @@
     "full_sharpe": 0.708,
     "full_cagr_pct": 9.83,
     "benchmark_cagr_pct": 16.61
+  },
+  {
+    "date": "2026-11-04",
+    "strategy": "rsi_meanrev",
+    "params": {
+      "period": 3,
+      "entry": 30,
+      "exit": 70
+    },
+    "channel": "harness",
+    "rationale": "Period=3 is an untested rung between period=2 (many trades, low Sharpe) and period=14 (few trades, high Sharpe) aiming to balance both across the gate thresholds",
+    "verdict": "killed",
+    "kill_reasons": [
+      "beat benchmark in 1/4 folds (< 3)",
+      "median fold Sharpe 0.51 <= incumbent 1.96",
+      "deflated Sharpe prob 0.09 < 0.9"
+    ],
+    "median_fold_sharpe": 0.5086528702806835,
+    "fold_sharpes": [
+      0.474,
+      0.307,
+      2.329,
+      0.509
+    ],
+    "folds_beating_benchmark": 1,
+    "trades_in_folds": 99,
+    "deflated_sharpe_prob": 0.088,
+    "full_sharpe": 0.774,
+    "full_cagr_pct": 11.62,
+    "benchmark_cagr_pct": 16.59
   }
 ]
