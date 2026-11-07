@@ -1,8 +1,10 @@
 # Trading Harness²
 
-A self-improving **paper-trading** system on live market data, run under the
-Harness² protocol (Propose → Probe → Compose → Reflect) with
-falsification-first rules.
+A self-improving **paper-trading** system on live market data, being rebuilt
+on Google's Harness² framework (google-research/harness2) with
+falsification-first rules. **Design: [DESIGN.md](DESIGN.md).** The
+deterministic core described below (data, backtest, paper account, gates)
+becomes the framework's trading environment and judge.
 
 **Paper only.** There is no broker integration, no API key, and no credential
 anywhere in this repo. Fills are simulated against end-of-day market data
