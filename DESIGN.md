@@ -129,13 +129,15 @@ OPENROUTER_API_KEY=<existing key>   # read by OpenCode's openrouter provider
 
 ## Build steps
 
-1. Install Harness²; run `harness2-demo` (deterministic editors, no
-   credentials) — proves the framework runs here.
-2. OpenCode + OpenRouter smoke: solver string above answers through
-   OpenCode. **Gate:** OpenCode on this VM is currently broken (session
-   deadlock, see AGENTS.md) — if the smoke fails, run Harness² where
-   OpenCode works (Den's laptop) or fix OpenCode first. No step 3 before
-   this passes.
+1. ✅ DONE 2026-11-17: Harness² installed at ~/workspace/harness2 (uv,
+   Python 3.12); `harness2-demo --k 2` completed 2/2 tasks, both recursion
+   modes, artifacts in runs/demo.
+2. ✅ DONE 2026-11-17: OpenCode smoke passed on this VM — service up, one
+   API session on the free default model executed a tool call and wrote
+   the file. (The Oct 29 "OpenCode broken" note is stale; if it regresses,
+   adapter coding falls back to direct edits per AGENTS.md — it is not a
+   gate.) Remaining config: point OpenCode's openrouter provider at the
+   solver string above for model-backed runs.
 3. Write the `papertrade` adapter: task definitions (episode windows),
    environment wiring to the existing core, code judge, report.
 4. Seed the harness tree (table above); first k=1 sequential run on one
